@@ -8,7 +8,7 @@
 # This program and the accompanying materials are made available under the
 # terms of the Apache License, Version 2.0 which is available at
 # https://www.apache.org/licenses/LICENSE-2.0.
-#
+
 # Unless required by applicable law or agreed to in writing, software
 # distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
 # WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
@@ -42,9 +42,9 @@ jobs:
           echo mask_client_bearer_token=$mask_client_bearer_token >> $GITHUB_ENV
 
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
 
-      - uses: actions/setup-python@v4
+      - uses: actions/setup-python@f67710373896472f88365697669d03362e49c95d # v5.4.0
         with:
           python-version: "3.8"
           check-latest: true
@@ -62,7 +62,7 @@ jobs:
           BEARER_TOKEN: ${{ env.mask_client_bearer_token }}
           SEMANTIC_HUB_API_URL: ${{ inputs.semantichubUrl }}
       - name: Upload test report
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@4cedc5d8fe5721698f1c834b060731f2090d2309 # v4.6.1
         if: always()
         with:
           name: semantic-hub-e2e-test-report

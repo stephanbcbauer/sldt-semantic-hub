@@ -38,19 +38,19 @@ jobs:
     steps:
       - name: Checkout if push
         if: ${{ github.event_name == 'push' }}
-        uses: actions/checkout@v3
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
       - name: Checkout if workflow_dispatch
         if: ${{ github.event_name == 'workflow_dispatch' }}
-        uses: actions/checkout@v3
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
           ref: ${{ inputs.tag }}
       - name: setup-java
-        uses: actions/setup-java@v3
+        uses: actions/setup-java@3a4f6111f18e3a0147563e7784f39100145c11a0 # v4.5.0
         with:
           distribution: temurin
           java-version: 17
       - name: Setup Maven Action
-        uses: s4u/setup-maven-action@v1.7.0
+        uses: s4u/setup-maven-action@d175402636a04870f7236d1b76426477cc67341e
         with:
           java-version: 17
       - name: execute-maven-deps
@@ -61,7 +61,7 @@ jobs:
         run: npm install
       - name: Docker meta
         id: meta
-        uses: docker/metadata-action@v4
+        uses: docker/metadata-action@369eb591f429131d6889c46b94e711f089e6ca96 # v5.7.0
         with:
           images: |
             ${{ env.IMAGE_NAMESPACE }}/${{ env.IMAGE_NAME }}
@@ -72,12 +72,12 @@ jobs:
             type=semver,pattern={{major}}.{{minor}},value=${{ inputs.tag }}
             type=raw,value=latest,enable=${{ inputs.tag != '' }}
       - name: DockerHub login
-        uses: docker/login-action@v2
+        uses: docker/login-action@9780b0c442fbb1117ed29e0efdff1e18412f7567 # v3.3.0
         with:
           username: ${{ secrets.DOCKER_HUB_USER }}
           password: ${{ secrets.DOCKER_HUB_TOKEN }}
       - name: Build and push
-        uses: docker/build-push-action@v3
+        uses: docker/build-push-action@01fa3296cda7663c630f9000a6c9994960523297 # v6.15.0
         with:
           context: .
           push: true
@@ -85,7 +85,7 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
       - name: Update Docker Hub description
-        uses: peter-evans/dockerhub-description@v3
+        uses: peter-evans/dockerhub-description@e740124706be220ec422501a403075c3f8510839 # v4.0.0
         with:
           username: ${{ secrets.DOCKER_HUB_USER }}
           password: ${{ secrets.DOCKER_HUB_TOKEN }}
