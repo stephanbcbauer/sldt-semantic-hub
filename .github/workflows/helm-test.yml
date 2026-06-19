@@ -25,7 +25,6 @@ on:
     inputs:
       node_image:
         description: 'kindest/node image for k8s kind cluster'
-        # k8s version from 3.1 release as default
         default: 'kindest/node:v1.27.3'
         required: false
         type: string
@@ -40,28 +39,27 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
           fetch-depth: 0
 
       - name: Kubernetes KinD Cluster
-        uses: container-tools/kind-action@v1
+        uses: container-tools/kind-action@0ad2e0f599951d8be8d5757995f6797a1518b9b4 # v2.0.4
         with:
-          # upgrade version, default (v0.17.0) uses node image v1.21.1 and doesn't work with more recent node image versions
           version: v0.20.0
 
       - name: Set up Helm
-        uses: azure/setup-helm@v3
+        uses: azure/setup-helm@fe7b43083161ca120300c9205562095f6e804f32 # v4.2.0
         with:
           version: v3.9.3
 
-      - uses: actions/setup-python@v4
+      - uses: actions/setup-python@f67710373896472f88365697669d03362e49c95d # v5.4.0
         with:
           python-version: "3.9"
           check-latest: true
 
       - name: Set up chart-testing
-        uses: helm/chart-testing-action@v2.3.1
+        uses: helm/chart-testing-action@36486f566463f1304526fef65ca6270438ec3011 # v2.7.0
 
       - name: Run chart-testing (list-changed)
         id: list-changed
